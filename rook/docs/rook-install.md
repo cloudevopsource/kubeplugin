@@ -17,8 +17,9 @@ git clone https://github.com/rook/rook.git
 cd cluster/examples/kubernetes/ceph
 kubectl create -f common.yaml
 kubectl create -f operator.yaml
-kubectl create -f cluster-test.yaml
 
+
+#编辑 cluster.yaml
 给节点打标签
 运行ceph-mon的节点打上：ceph-mon=enabled
 kubectl label nodes {k8scloud1.frcloud.io,k8scloud2.frcloud.io,k8scloud3.frcloud.io} ceph-mon=enabled
@@ -28,4 +29,7 @@ kubectl label nodes {k8scloud1.frcloud.io,k8scloud2.frcloud.io,k8scloud3.frcloud
 #mgr只能支持一个节点运行，这是ceph跑k8s里的局限
 kubectl label nodes k8scloud1.frcloud.io ceph-mgr=enabled
 
+
+
+kubectl create -f cluster.yaml
 ```

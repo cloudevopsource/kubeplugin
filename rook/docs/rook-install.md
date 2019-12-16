@@ -12,3 +12,10 @@ cd /stage
 git clone https://github.com/rook/rook.git
 
 ```
+
+``` bash
+cd cluster/examples/kubernetes/ceph
+kubectl create -f common.yaml
+kubectl create -f operator.yaml
+kubectl create -f cluster-test.yaml
+```

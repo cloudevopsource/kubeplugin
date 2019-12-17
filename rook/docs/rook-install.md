@@ -100,11 +100,7 @@ MGR_POD=`kubectl get pod -n rook-ceph | grep mgr | awk '{print $1}'`
 kubectl -n rook-ceph logs $MGR_POD | grep password
 ```
 
-+ 找出Dashboard的登陆账号和密码
-```bash
-MGR_POD=`kubectl get pod -n rook-ceph | grep mgr | awk '{print $1}'`
-kubectl -n rook-ceph logs $MGR_POD | grep password
-```
+
 
 + 打开浏览器输入任意一个Node的IP+nodeport端口
 

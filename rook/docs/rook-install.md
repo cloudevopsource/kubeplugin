@@ -84,3 +84,20 @@ kubectl -n rook-ceph get pod -o wide
 ## 安装后的配置
 
 + 配置ceph dashboard
+
+## 清理rook
+
+```bash
+DISK="/dev/vdb"
+# Zap the disk to a fresh, usable state (zap-all is important, b/c MBR has to be clean)
+# You will have to run this step for all disks.
+yum install -y gdisk
+sgdisk --zap-all $DISK
+
+# These steps only have to be run once on each node
+# If rook sets up osds using ceph-volume, teardown leaves some devices mapped that lock the disks.
+ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %
+# ceph-volume setup can leave ceph-<UUID> directories in /dev (unnecessary clutter)
+rm -rf /dev/ceph-*
+dd if=/dev/zero of=/dev/vdb bs=1M count=10240 oflag=direct
+```

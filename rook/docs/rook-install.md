@@ -153,7 +153,20 @@ reclaimPolicy: Retain
 kubectl apply -f storageclass.yaml
 kubectl get storageclasses.storage.k8s.io  -n rook-ceph
 kubectl describe storageclasses.storage.k8s.io  -n rook-ceph
-
+[root@k8scloud1 ceph]# kubectl get storageclasses.storage.k8s.io  -n rook-ceph
+NAME              PROVISIONER                  AGE
+rook-ceph-block   rook-ceph.rbd.csi.ceph.com   47s
+[root@k8scloud1 ceph]# kubectl describe storageclasses.storage.k8s.io  -n rook-ceph
+Name:                  rook-ceph-block
+IsDefaultClass:        No
+Annotations:           <none>
+Provisioner:           rook-ceph.rbd.csi.ceph.com
+Parameters:            clusterID=rook-ceph,csi.storage.k8s.io/fstype=xfs,csi.storage.k8s.io/node-stage-secret-name=rook-csi-rbd-node,csi.storage.k8s.io/node-stage-secret-namespace=rook-ceph,csi.storage.k8s.io/provisioner-secret-name=rook-csi-rbd-provisioner,csi.storage.k8s.io/provisioner-secret-namespace=rook-ceph,imageFeatures=layering,imageFormat=2,pool=replicapool
+AllowVolumeExpansion:  <unset>
+MountOptions:          <none>
+ReclaimPolicy:         Retain
+VolumeBindingMode:     Immediate
+Events:                <none>
 ```
 
 ## 配置ceph FS为storageclass

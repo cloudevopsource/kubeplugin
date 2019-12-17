@@ -146,6 +146,14 @@ reclaimPolicy: Retain
 
 ```
 
++ 创建storageclass
+```bash
+kubectl apply -f storageclass.yaml
+kubectl get storageclasses.storage.k8s.io  -n rook-ceph
+kubectl describe storageclasses.storage.k8s.io  -n rook-ceph
+
+```
+
 + 打开浏览器输入任意一个Node的IP+nodeport端口
 
 ## 清理rook

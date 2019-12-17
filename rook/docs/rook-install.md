@@ -47,7 +47,7 @@ kubectl create -f common.yaml
 kubectl create -f operator.yaml
 ```
 
-+ 添加帐户全县
++ 添加帐户控制权限
 ``` bash
 cd rook
 cd cluster/examples/kubernetes/ceph

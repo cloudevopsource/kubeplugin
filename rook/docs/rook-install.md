@@ -273,7 +273,67 @@ VolumeBindingMode:     Immediate
 Events:                <none>
 
 ```
++ 创建个nginx pod尝试挂载
 
+cat << EOF > nginx.yaml
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nginx-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx
+  ports: 
+  - port: 80
+    name: nginx-port
+    targetPort: 80
+    protocol: TCP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - mountPath: /html
+          name: http-file
+      volumes:
+      - name: http-file
+        persistentVolumeClaim:
+          claimName: nginx-pvc
+EOF
+
+kubectl apply -f nginx.yaml
 ## 清理rook
 
 + 删除Block and File artifacts

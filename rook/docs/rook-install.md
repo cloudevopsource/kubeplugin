@@ -287,7 +287,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: ceph
+  storageClassName: rook-cephfs
 
 ---
 apiVersion: v1

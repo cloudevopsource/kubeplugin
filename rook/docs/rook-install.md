@@ -6,18 +6,34 @@
 
 
 
-## 下载最新rook软件包
+## 安装前的准备
+
++ 设置参数
+
+
++ 设置master运行pod(重要)
+
+``` bash
+#如果希望将k8s-master也当作Node节点使用，可以执行如下命令,其中k8s-master是主机节点hostname：
+kubectl taint node k8scloud1.frcloud.io node-role.kubernetes.io/master-
+kubectl taint node k8scloud2.frcloud.io node-role.kubernetes.io/master-
+kubectl taint node k8scloud3.frcloud.io node-role.kubernetes.io/master-
+```
+
+## 安装rook
+
++ 下载最新rook软件包
 ``` bash
 cd /stage
 git clone https://github.com/rook/rook.git
 
 ```
-
++ 配置rook
 ``` bash
 cd cluster/examples/kubernetes/ceph
 kubectl create -f common.yaml
 kubectl create -f operator.yaml
-
+```
 
 #编辑 cluster.yaml
 给节点打标签

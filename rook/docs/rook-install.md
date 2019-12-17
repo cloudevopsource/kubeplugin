@@ -40,12 +40,7 @@ cd /stage
 git clone https://github.com/rook/rook.git
 
 ```
-+ 配置rook
-``` bash
-cd cluster/examples/kubernetes/ceph
-kubectl create -f common.yaml
-kubectl create -f operator.yaml
-```
+
 
 + 添加帐户控制权限
 ``` bash

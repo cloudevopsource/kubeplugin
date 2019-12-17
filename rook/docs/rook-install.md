@@ -103,7 +103,7 @@ cd cluster/examples/kubernetes/ceph
 kubectl delete -f operator.yaml
 kubectl delete -f common.yaml
 ```
-+ 删除主机磁盘上的数据
++ 删除主机磁盘上的数据(重要)
 ```bash
 DISK="/dev/vdb"
 # Zap the disk to a fresh, usable state (zap-all is important, b/c MBR has to be clean)
@@ -116,6 +116,7 @@ sgdisk --zap-all $DISK
 ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %
 # ceph-volume setup can leave ceph-<UUID> directories in /dev (unnecessary clutter)
 rm -rf /dev/ceph-*
-rm -rf /va/lib/rook
+#务必清除干净
+rm -rf /va/lib/rook/*
 dd if=/dev/zero of=/dev/vdb bs=1M count=10240 oflag=direct
 ```

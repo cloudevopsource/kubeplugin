@@ -225,7 +225,7 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
   csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
 
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 ```
 + 创建文件系统
 

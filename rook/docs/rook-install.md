@@ -106,7 +106,6 @@ kubectl -n rook-ceph logs $MGR_POD | grep password
 
 + 官方提供的配置模板
 ```bash
-/stage/rook/cluster/examples/kubernetes/ceph/csi/cephfs/storageclass.yaml
 /stage/rook/cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml
 ```
 
@@ -195,6 +194,38 @@ spec:
   metadataServer:
     activeCount: 1
     activeStandby: true
+    
+    
+#storageclass.yaml    
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: rook-cephfs
+# Change "rook-ceph" provisioner prefix to match the operator namespace if needed
+provisioner: rook-ceph.cephfs.csi.ceph.com
+parameters:
+  # clusterID is the namespace where operator is deployed.
+  clusterID: rook-ceph
+
+  # CephFS filesystem name into which the volume shall be created
+  fsName: myfs
+
+  # Ceph pool into which the volume shall be created
+  # Required for provisionVolume: "true"
+  pool: myfs-data0
+
+  # Root path of an existing CephFS volume
+  # Required for provisionVolume: "false"
+  # rootPath: /absolute/path
+
+  # The secrets contain Ceph admin credentials. These are generated automatically by the operator
+  # in the same namespace as the cluster.
+  csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+  csi.storage.k8s.io/provisioner-secret-namespace: rook-ceph
+  csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+  csi.storage.k8s.io/node-stage-secret-namespace: rook-ceph
+
+reclaimPolicy: Delete
 ```
 + 创建文件系统
 

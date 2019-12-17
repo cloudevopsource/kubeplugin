@@ -101,6 +101,15 @@ kubectl -n rook-ceph logs $MGR_POD | grep password
 ```
 
 ## 配置ceph为storageclass
+
++ 官方提供的配置模板
+```bash
+/stage/rook/cluster/examples/kubernetes/ceph/csi/cephfs/storageclass.yaml
+/stage/rook/cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml
+```
+
+
++ 配置范例
 ```bash
 apiVersion: ceph.rook.io/v1beta1
 kind: Pool

@@ -87,6 +87,27 @@ kubectl -n rook-ceph get pod -o wide
 
 ## 清理rook
 
++ 删除Block and File artifacts
+```bash
+kubectl delete -f ../wordpress.yaml
+kubectl delete -f ../mysql.yaml
+kubectl delete -n rook-ceph cephblockpool replicapool
+kubectl delete storageclass rook-ceph-block
+kubectl delete -f csi/cephfs/kube-registry.yaml
+kubectl delete storageclass rook-cephfs
+```
+
++ 删除CephCluster CRD
+```bash
+kubectl -n rook-ceph delete cephcluster rook-ceph
+```
+
++ 删除Operator and related Resources
+```bash
+kubectl delete -f operator.yaml
+kubectl delete -f common.yaml
+```
++ 删除主机磁盘上的数据
 ```bash
 DISK="/dev/vdb"
 # Zap the disk to a fresh, usable state (zap-all is important, b/c MBR has to be clean)

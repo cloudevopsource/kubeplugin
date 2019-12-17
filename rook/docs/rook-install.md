@@ -99,6 +99,7 @@ kubectl -n rook-ceph delete cephcluster rook-ceph
 
 + 删除Operator and related Resources
 ```bash
+cd cluster/examples/kubernetes/ceph
 kubectl delete -f operator.yaml
 kubectl delete -f common.yaml
 ```
@@ -115,5 +116,6 @@ sgdisk --zap-all $DISK
 ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %
 # ceph-volume setup can leave ceph-<UUID> directories in /dev (unnecessary clutter)
 rm -rf /dev/ceph-*
+rm -rf /va/lib/rook
 dd if=/dev/zero of=/dev/vdb bs=1M count=10240 oflag=direct
 ```

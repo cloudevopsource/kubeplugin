@@ -1,13 +1,5 @@
 # rook 安装指南
 
-+所有节点开启ip_forward
-``` bash
-cat <<EOF >  /etc/sysctl.d/ceph.conf
-net.ipv4.ip_forward = 1
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-EOF
-```
 
 
 ## 安装前规划
@@ -16,8 +8,15 @@ EOF
 
 ## 安装前的准备
 
-+ 设置参数
 
++ 所有节点开启ip_forward
+``` bash
+cat <<EOF >  /etc/sysctl.d/ceph.conf
+net.ipv4.ip_forward = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+```
 
 + 设置master运行pod(重要)
 

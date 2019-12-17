@@ -76,9 +76,37 @@ kubectl -n rook-ceph get pod -o wide
 ```
 
 
-## 安装后的配置
 
-+ 配置ceph dashboard
+
+## 配置ceph dashboard
+
+
++ 看一眼dashboard在哪个service上
+```bash
+kubectl -n rook-ceph get service
+#可以看到dashboard监听了8443端口
+```
+
++ 创建个nodeport类型的service以便集群外部访问
+```bash
+kubectl apply -f dashboard-external-https.yaml
+# 查看一下nodeport在哪个端口
+ss -tanl
+kubectl -n rook-ceph get service
+```
++ 找出Dashboard的登陆账号和密码
+```bash
+MGR_POD=`kubectl get pod -n rook-ceph | grep mgr | awk '{print $1}'`
+kubectl -n rook-ceph logs $MGR_POD | grep password
+```
+
++ 找出Dashboard的登陆账号和密码
+```bash
+MGR_POD=`kubectl get pod -n rook-ceph | grep mgr | awk '{print $1}'`
+kubectl -n rook-ceph logs $MGR_POD | grep password
+```
+
++ 打开浏览器输入任意一个Node的IP+nodeport端口
 
 ## 清理rook
 

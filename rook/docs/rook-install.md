@@ -21,10 +21,15 @@ EOF
 + 设置master运行pod(重要)
 
 ``` bash
+#Master Node不参与工作负载，所以Taints: node-role.kubernetes.io/master:NoSchedule
+#通过以下命令进行查看
+kubectl describe node k8scloud1.frcloud.io | grep Taints 状态分别为node-role.kubernetes.io/master:NoSchedule 或<none>
 #如果希望将k8s-master也当作Node节点使用，可以执行如下命令,其中k8s-master是主机节点hostname：
 kubectl taint node k8scloud1.frcloud.io node-role.kubernetes.io/master-
 kubectl taint node k8scloud2.frcloud.io node-role.kubernetes.io/master-
 kubectl taint node k8scloud3.frcloud.io node-role.kubernetes.io/master-
+#如果要恢复Master Only状态，执行如下命令：
+kubectl taint node k8scloud1.frcloud.io node-role.kubernetes.io/master=:NoSchedule
 ```
 
 ## 安装rook

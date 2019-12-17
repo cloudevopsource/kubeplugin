@@ -151,8 +151,6 @@ reclaimPolicy: Retain
 + 创建storageclass
 ```bash
 kubectl apply -f storageclass.yaml
-kubectl get storageclasses.storage.k8s.io  -n rook-ceph
-kubectl describe storageclasses.storage.k8s.io  -n rook-ceph
 [root@k8scloud1 ceph]# kubectl get storageclasses.storage.k8s.io  -n rook-ceph
 NAME              PROVISIONER                  AGE
 rook-ceph-block   rook-ceph.rbd.csi.ceph.com   47s

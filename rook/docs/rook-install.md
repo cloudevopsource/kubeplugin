@@ -171,45 +171,42 @@ Events:                <none>
 
 + 官方提供的配置模板
 ```bash
+/stage/rook/cluster/examples/kubernetes/ceph/filesystem.yaml
 /stage/rook/cluster/examples/kubernetes/ceph/csi/cephfs/storageclass.yaml
-/stage/rook/cluster/examples/kubernetes/ceph/csi/rbd/storageclass.yaml
 ```
 
 
 + 配置范例
 ```bash
-apiVersion: ceph.rook.io/v1beta1
-kind: Pool
+#filesystem.yaml
+apiVersion: ceph.rook.io/v1
+kind: CephFilesystem
 metadata:
-  #这个name就是创建成ceph pool之后的pool名字
-  name: replicapool
+  name: myfs
   namespace: rook-ceph
 spec:
-  replicated:
-    size: 1
-  # size 池中数据的副本数,1就是不保存任何副本
-  failureDomain: osd
-  #  failureDomain：数据块的故障域，
-  #  值为host时，每个数据块将放置在不同的主机上
-  #  值为osd时，每个数据块将放置在不同的osd上
----
-apiVersion: storage.k8s.io/v1
-kind: StorageClass
-metadata:
-   name: ceph
-   # StorageClass的名字，pvc调用时填的名字
-provisioner: ceph.rook.io/block
-parameters:
-  pool: replicapool
-  # Specify the namespace of the rook cluster from which to create volumes.
-  # If not specified, it will use `rook` as the default namespace of the cluster.
-  # This is also the namespace where the cluster will be
-  clusterNamespace: rook-ceph
-  # Specify the filesystem type of the volume. If not specified, it will use `ext4`.
-  fstype: xfs
-# 设置回收策略默认为：Retain
-reclaimPolicy: Retain
+  metadataPool:
+    replicated:
+      size: 3
+  dataPools:
+    - replicated:
+        size: 3
+  preservePoolsOnDelete: true
+  metadataServer:
+    activeCount: 1
+    activeStandby: true
+```
++ 创建文件系统
 
+```bash
+## Create the filesystem
+$ kubectl create -f filesystem.yaml
+[...]
+## To confirm the filesystem is configured, wait for the mds pods to start
+$ kubectl -n rook-ceph get pod -l app=rook-ceph-mds
+NAME                                      READY     STATUS    RESTARTS   AGE
+rook-ceph-mds-myfs-7d59fdfcf4-h8kw9       1/1       Running   0          12s
+rook-ceph-mds-myfs-7d59fdfcf4-kgkjp       1/1       Running   0          12s
 
 ```
 

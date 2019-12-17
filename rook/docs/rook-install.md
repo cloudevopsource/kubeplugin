@@ -73,6 +73,45 @@ kubectl apply -f cluster.yaml
 kubectl -n rook-ceph get pod -o wide  -w
 # 看到所有的pod都Running就行了,此时注意看一下pod分布的宿主机，跟我们打标签的主机是一致的
 kubectl -n rook-ceph get pod -o wide
+
+[root@k8scloud1 stage]# kubectl get pods -n rook-ceph -o wide
+NAME                                                             READY   STATUS      RESTARTS   AGE    IP               NODE                   NOMINATED NODE   READINESS GATES
+csi-cephfsplugin-88clg                                           3/3     Running     0          3h9m   192.168.224.4    k8scloud4.frcloud.io   <none>           <none>
+csi-cephfsplugin-hxzdl                                           3/3     Running     0          3h9m   192.168.224.5    k8scloud5.frcloud.io   <none>           <none>
+csi-cephfsplugin-jhdql                                           3/3     Running     0          3h9m   192.168.224.3    k8scloud3.frcloud.io   <none>           <none>
+csi-cephfsplugin-kzl5m                                           3/3     Running     0          3h9m   192.168.224.1    k8scloud1.frcloud.io   <none>           <none>
+csi-cephfsplugin-nmr6w                                           3/3     Running     0          3h9m   192.168.224.2    k8scloud2.frcloud.io   <none>           <none>
+csi-cephfsplugin-provisioner-56c8b7ddf4-mrd5f                    4/4     Running     0          3h9m   10.100.177.24    k8scloud3.frcloud.io   <none>           <none>
+csi-cephfsplugin-provisioner-56c8b7ddf4-w7xd4                    4/4     Running     0          3h9m   10.100.72.16     k8scloud4.frcloud.io   <none>           <none>
+csi-rbdplugin-4jz5h                                              3/3     Running     0          3h9m   192.168.224.4    k8scloud4.frcloud.io   <none>           <none>
+csi-rbdplugin-8qd7d                                              3/3     Running     0          3h9m   192.168.224.1    k8scloud1.frcloud.io   <none>           <none>
+csi-rbdplugin-hjxcz                                              3/3     Running     0          3h9m   192.168.224.5    k8scloud5.frcloud.io   <none>           <none>
+csi-rbdplugin-lnbhw                                              3/3     Running     0          3h9m   192.168.224.2    k8scloud2.frcloud.io   <none>           <none>
+csi-rbdplugin-provisioner-6ff4dd4b94-6l55d                       5/5     Running     0          3h9m   10.100.144.25    k8scloud2.frcloud.io   <none>           <none>
+csi-rbdplugin-provisioner-6ff4dd4b94-xt62n                       5/5     Running     2          3h9m   10.100.238.148   k8scloud5.frcloud.io   <none>           <none>
+csi-rbdplugin-vxwt4                                              3/3     Running     0          3h9m   192.168.224.3    k8scloud3.frcloud.io   <none>           <none>
+rook-ceph-crashcollector-k8scloud1.frcloud.io-6b89cf7ff9-g7vfm   1/1     Running     0          3h8m   10.100.94.42     k8scloud1.frcloud.io   <none>           <none>
+rook-ceph-crashcollector-k8scloud2.frcloud.io-85dd47cfd-p822v    1/1     Running     0          3h8m   10.100.144.28    k8scloud2.frcloud.io   <none>           <none>
+rook-ceph-crashcollector-k8scloud3.frcloud.io-bff987d8f-x6wlb    1/1     Running     0          3h8m   10.100.177.29    k8scloud3.frcloud.io   <none>           <none>
+rook-ceph-mds-myfs-a-d598db65d-cc4j9                             1/1     Running     0          40m    10.100.144.36    k8scloud2.frcloud.io   <none>           <none>
+rook-ceph-mds-myfs-b-99dd4ff85-8j57x                             1/1     Running     0          40m    10.100.177.38    k8scloud3.frcloud.io   <none>           <none>
+rook-ceph-mgr-a-59df5cb66c-rbjnl                                 1/1     Running     0          3h8m   10.100.94.40     k8scloud1.frcloud.io   <none>           <none>
+rook-ceph-mon-a-75cd466dc8-hfbsg                                 1/1     Running     0          3h8m   10.100.94.39     k8scloud1.frcloud.io   <none>           <none>
+rook-ceph-mon-b-657f47d7c7-4pgz5                                 1/1     Running     0          3h8m   10.100.177.28    k8scloud3.frcloud.io   <none>           <none>
+rook-ceph-mon-c-56dd8ccff7-lspxw                                 1/1     Running     0          3h8m   10.100.144.27    k8scloud2.frcloud.io   <none>           <none>
+rook-ceph-operator-7cbfbf4ddc-lmtbb                              1/1     Running     0          3h9m   10.100.177.22    k8scloud3.frcloud.io   <none>           <none>
+rook-ceph-osd-0-7899ff86c4-ch4nx                                 1/1     Running     0          3h7m   10.100.177.31    k8scloud3.frcloud.io   <none>           <none>
+rook-ceph-osd-1-7957fc4c89-kwmbr                                 1/1     Running     0          3h7m   10.100.144.30    k8scloud2.frcloud.io   <none>           <none>
+rook-ceph-osd-2-76bcc5c95b-kblng                                 1/1     Running     0          3h7m   10.100.94.43     k8scloud1.frcloud.io   <none>           <none>
+rook-ceph-osd-prepare-k8scloud1.frcloud.io-p9h45                 0/1     Completed   0          127m   10.100.94.47     k8scloud1.frcloud.io   <none>           <none>
+rook-ceph-osd-prepare-k8scloud2.frcloud.io-8g9bh                 0/1     Completed   0          127m   10.100.144.35    k8scloud2.frcloud.io   <none>           <none>
+rook-ceph-osd-prepare-k8scloud3.frcloud.io-sjt85                 0/1     Completed   0          127m   10.100.177.36    k8scloud3.frcloud.io   <none>           <none>
+rook-discover-n2k9c                                              1/1     Running     0          3h9m   10.100.177.23    k8scloud3.frcloud.io   <none>           <none>
+rook-discover-n2ppm                                              1/1     Running     0          3h9m   10.100.144.24    k8scloud2.frcloud.io   <none>           <none>
+rook-discover-tgcqb                                              1/1     Running     0          3h9m   10.100.238.147   k8scloud5.frcloud.io   <none>           <none>
+rook-discover-wcv9d                                              1/1     Running     0          3h9m   10.100.72.15     k8scloud4.frcloud.io   <none>           <none>
+rook-discover-xt8pq                                              1/1     Running     0          3h9m   10.100.94.37     k8scloud1.frcloud.io   <none>           <none>
+
 ```
 
 

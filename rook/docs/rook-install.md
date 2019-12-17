@@ -274,7 +274,7 @@ Events:                <none>
 
 ```
 + 创建个nginx pod尝试挂载
-
+```bash
 cat << EOF > nginx.yaml
 ---
 apiVersion: v1
@@ -332,7 +332,7 @@ spec:
         persistentVolumeClaim:
           claimName: nginx-pvc
 EOF
-
+```
 kubectl apply -f nginx.yaml
 ## 清理rook
 

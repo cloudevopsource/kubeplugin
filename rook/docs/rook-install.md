@@ -244,8 +244,33 @@ rook-ceph-mds-myfs-7d59fdfcf4-kgkjp       1/1       Running   0          12s
 + 创建storageclass
 ```bash
 kubectl apply -f storageclass.yaml
-kubectl get storageclasses.storage.k8s.io  -n rook-ceph
-kubectl describe storageclasses.storage.k8s.io  -n rook-ceph
+[root@k8scloud1 ceph]# kubectl get storageclasses.storage.k8s.io  -n rook-ceph
+NAME              PROVISIONER                     AGE
+csi-cephfs        rook-ceph.cephfs.csi.ceph.com   17s
+rook-ceph-block   rook-ceph.rbd.csi.ceph.com      17m
+[root@k8scloud1 ceph]# kubectl describe storageclasses.storage.k8s.io  -n rook-ceph
+Name:                  csi-cephfs
+IsDefaultClass:        No
+Annotations:           <none>
+Provisioner:           rook-ceph.cephfs.csi.ceph.com
+Parameters:            clusterID=rook-ceph,csi.storage.k8s.io/node-stage-secret-name=rook-csi-cephfs-node,csi.storage.k8s.io/node-stage-secret-namespace=rook-ceph,csi.storage.k8s.io/provisioner-secret-name=rook-csi-cephfs-provisioner,csi.storage.k8s.io/provisioner-secret-namespace=rook-ceph,fsName=myfs,pool=myfs-data0
+AllowVolumeExpansion:  <unset>
+MountOptions:          <none>
+ReclaimPolicy:         Retain
+VolumeBindingMode:     Immediate
+Events:                <none>
+
+
+Name:                  rook-ceph-block
+IsDefaultClass:        No
+Annotations:           <none>
+Provisioner:           rook-ceph.rbd.csi.ceph.com
+Parameters:            clusterID=rook-ceph,csi.storage.k8s.io/fstype=xfs,csi.storage.k8s.io/node-stage-secret-name=rook-csi-rbd-node,csi.storage.k8s.io/node-stage-secret-namespace=rook-ceph,csi.storage.k8s.io/provisioner-secret-name=rook-csi-rbd-provisioner,csi.storage.k8s.io/provisioner-secret-namespace=rook-ceph,imageFeatures=layering,imageFormat=2,pool=replicapool
+AllowVolumeExpansion:  <unset>
+MountOptions:          <none>
+ReclaimPolicy:         Retain
+VolumeBindingMode:     Immediate
+Events:                <none>
 
 ```
 

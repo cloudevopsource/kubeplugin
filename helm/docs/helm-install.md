@@ -18,9 +18,21 @@ Error: could not find tiller
 ```
 ## helm 服务端配置
 
+```bash 
+添加helm service account 并添加到clusteradmin 这个clusterrole上
+
+kubectl create serviceaccount --namespace=kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+作者：陈Sir的知识库
+链接：https://www.jianshu.com/p/7ab38da8758e
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
 helm init \
     --history-max=3 \
-    --tiller-image=gcr.azk8s.cn/kubernetes-helm/tiller:v2.14.3 \
-    --stable-repo-url=https://mirror.azure.cn/kubernetes/charts/ \
+    --tiller-image=registry.cn-hangzhou.aliyuncs.com/google_containers/tiller:v2.14.3 \
+    --stable-repo-url=https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts \
     --service-account=helm-tiller
+    
+    ://127.0.0.1:8879/charts 

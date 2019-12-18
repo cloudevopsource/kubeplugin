@@ -19,15 +19,18 @@ Error: could not find tiller
 ## helm 服务端配置
 
 ```bash 
-添加helm service account 并添加到clusteradmin 这个clusterrole上
+#添加helm service account 并添加到clusteradmin 这个clusterrole上
+# 创建账号、绑定角色
+kubectl create serviceaccount --namespace kube-system helm-tiller
+kubectl create clusterrolebinding helm-tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:helm-tiller
 
-kubectl create serviceaccount --namespace=kube-system tiller
-kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+# 给tiller设置角色
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"helm-tiller"}}}}' deployment.extensions "tiller-deploy" patched
 
-作者：陈Sir的知识库
-链接：https://www.jianshu.com/p/7ab38da8758e
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+# 查看授权
+kubectl get deploy --namespace kube-system   tiller-deploy  --output yaml|grep  serviceAccount
+      serviceAccount: helm-tiller
+      serviceAccountName: helm-tiller
 
 helm init \
     --history-max=3 \

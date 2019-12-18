@@ -45,8 +45,31 @@ kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"templat
 kubectl get deploy --namespace kube-system   tiller-deploy  --output yaml|grep  serviceAccount
       serviceAccount: helm-tiller
       serviceAccountName: helm-tiller
-```
+      
+      
+替换 repo 为阿里镜像，注意上面的命令已经做了这一步，所以不用做了。这里是对尚未替换repo的情况下，如何替换repo的介绍。
+root@rancherk8sm1:~# helm repo list
+NAME    URL
+stable  https://kubernetes-charts.storage.googleapis.com
+local   http://127.0.0.1:8879/charts
 
+
+
+root@rancherk8sm1:~# helm repo remove stable
+"stable" has been removed from your repositories
+
+root@rancherk8sm1:~# helm repo add stable https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+"stable" has been added to your repositories
+root@rancherk8sm1:~# helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete. ⎈ Happy Helming!⎈
+
+
+
+```
+## 如何初始化
 
 
 

@@ -17,3 +17,10 @@ Error: could not find tiller
 
 ```
 ## helm 服务端配置
+
+
+helm init \
+    --history-max=3 \
+    --tiller-image=gcr.azk8s.cn/kubernetes-helm/tiller:v2.14.3 \
+    --stable-repo-url=https://mirror.azure.cn/kubernetes/charts/ \
+    --service-account=helm-tiller

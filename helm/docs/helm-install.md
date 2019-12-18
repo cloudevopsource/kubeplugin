@@ -69,6 +69,55 @@ Update Complete. ⎈ Happy Helming!⎈
 
 
 ```
+
+
+如果这里的权限问题没有处理好，安装完成后会发现命令没有权限，
+root@master:/home/hzz# helm ls
+Error: configmaps is forbidden: User "system:serviceaccount:kube-system:default" cannot list resource "configmaps" in API group "" in the namespace "kube-system"
+
+可以通过helm reset -f或者helm reset --force强制删除tiller容器后，使用正确的参数重新进行helm init操作
+3、验证安装
+
+出现helm client 和server之后helm便安装完成
+root@master:/home/hzz# kubectl -n kube-system get pods|grep tiller-deploy
+tiller-deploy-7d49974877-w78nz          1/1     Running   0          4h46m
+
+root@master:/home/hzz# helm version
+Client: &version.Version{SemVer:"v2.14.0", GitCommit:"05811b84a3f93603dd6c2fcfe57944dfa7ab7fd0", GitTreeState:"clean"}
+Server: &version.Version{SemVer:"v2.14.0", GitCommit:"05811b84a3f93603dd6c2fcfe57944dfa7ab7fd0", GitTreeState:"clean"}
+
+可执行helm list查看K8S中已安装的charts 。
+二、使用
+1、更换仓库
+# 先移除原先的仓库
+root@master:/home/hzz# helm repo remove stable
+"stable" has been removed from your repositories
+
+# 添加新的仓库地址
+root@master:/home/hzz# helm repo add stable https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+"stable" has been added to your repositories
+
+# 更新仓库
+root@master:/home/hzz# helm repo update
+Hang tight while we grab the latest from your chart repositories...
+...Skip local chart repository
+...Successfully got an update from the "stable" chart repository
+Update Complete.
+
+2、查看可获取的Chart
+root@master:/home/hzz# helm search
+NAME                            CHART VERSION   APP VERSION     DESCRIPTION                     
+stable/acs-engine-autoscaler    2.1.3           2.1.1           Scales worker nodes within agent pools                      
+stable/aerospike                0.1.7           v3.14.1.2       A Helm chart for Aerospike in Kubernetes                    
+stable/anchore-engine           0.1.3           0.1.6           Anchore container analysis and policy evaluation engine s...
+stable/artifactory              7.0.3           5.8.4           Universal Repository Manager supporting all major packagi...
+stable/artifactory-ha           0.1.0           5.8.4           Universal Repository Manager supporting all major packagi...
+stable/aws-cluster-autoscaler   0.3.2                           Scales worker nodes within autoscaling groups.              
+stable/bitcoind                 0.1.0           0.15.1          Bitcoin is an innovative payment network and a new kind o...
+..................
+
+
+
 ## 如何初始化
 
 

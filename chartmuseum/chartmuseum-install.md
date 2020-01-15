@@ -49,3 +49,12 @@ ARGS=\
 #--basic-auth-user： 用户名（使用基本的认证方式，用户名+密码，使用证书方式参照点我)
 #--asic-auth-pass: 密码 （chartmuseum服务起来后，后续给helm添加repo时需要加上--username xxx --password ***）
 ```
++ 启动服务
+``` bash
+systemctl start chartmuseum
+systemctl status chaetmuseum
+```
++ 添加chartmuseum 到helm repo
+``` bash
+helm repo add chartmuseum http://192.168.4.32:9090 --username  admin --password  admin
+```

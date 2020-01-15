@@ -31,3 +31,14 @@ ExecStop=/usr/local/bin/chartmuseum step-down
 WantedBy=multi-user.target
 ```
 
++ EnvironmentFile的/etc/chartmuseum/chartmuseum.config配置
+
+``` bash
+ARGS=\
+--port=8889 \
+--storage="local" \
+--storage-local-rootdir="/var/lib/chartmuseum/chartstorage" \
+--log-json \
+--basic-auth-user=admin \
+--basic-auth-pass="Undead@666"
+```

@@ -41,4 +41,11 @@ ARGS=\
 --log-json \
 --basic-auth-user=admin \
 --basic-auth-pass="Undead@666"
+
+#--port： chartmuseum服务监听端口
+#--storage： local表示使用本地存储
+#--storage-local-rootdir: 本地存储点路径，helm push chart的存储路径
+#--log-json： 日志显示为json格式
+#--basic-auth-user： 用户名（使用基本的认证方式，用户名+密码，使用证书方式参照点我)
+#--asic-auth-pass: 密码 （chartmuseum服务起来后，后续给helm添加repo时需要加上--username xxx --password ***）
 ```

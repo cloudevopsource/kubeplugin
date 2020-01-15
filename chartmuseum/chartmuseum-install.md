@@ -57,6 +57,14 @@ systemctl status chaetmuseum
 + 添加chartmuseum 到helm repo
 ``` bash
 helm repo add chartmuseum http://192.168.4.32:9090 --username  admin --password  admin
+
+[root@jenkinsx harbor.frcloud.io]# helm repo list
+NAME            URL                                                   
+stable          https://kubernetes.oss-cn-hangzhou.aliyuncs.com/charts
+local           http://127.0.0.1:8879/charts                          
+localchart      http://172.16.26.1:8879                               
+chart           http://172.16.26.1:8879                               
+chartmuseum     http://172.16.26.1:8889 
 ```
 
 

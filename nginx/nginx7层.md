@@ -62,23 +62,7 @@ events {
 http {
 
 
-upstream hwcloudk8s {
-        ip_hash;
-        server 192.168.224.1:30080;
-        server 192.168.224.2:30080;
-        server 192.168.224.3:30080;
-}
-orker_processes 1;
-
-events {
-    worker_connections  1024;
-}
-
-
-http {
-
-
-upstream hwcloudk8s {
+upstream hwcloudk8s_http {
         ip_hash;
         server 192.168.224.1:30080;
         server 192.168.224.2:30080;
@@ -86,20 +70,33 @@ upstream hwcloudk8s {
 }
 
 
-upstream localk8s {
+upstream localk8s_http {
         ip_hash;
         server 172.16.22.1:30080;
         server 172.16.22.2:30080;
         server 172.16.22.3:30080;
 }
 
+upstream hwcloudk8s_https {
+        ip_hash;
+        server 192.168.224.1:30443;
+        server 192.168.224.2:30443;
+        server 192.168.224.3:30443;
+}
 
+
+upstream localk8s_https {
+        ip_hash;
+        server 172.16.22.1:30443;
+        server 172.16.22.2:30443;
+        server 172.16.22.3:30443;
+}
 
 server {
     listen   80;
     server_name  *.dev.frcloud.io;
     location / {
-        proxy_pass              http://hwcloudk8s;
+        proxy_pass              http://hwcloudk8s_http;
         proxy_redirect          off;
         proxy_set_header        Host $host;
         proxy_set_header        X-Real-IP $remote_addr;
@@ -111,9 +108,9 @@ server {
 
 server {
     listen   80;
-    server_name  *.frcloud.io;
+    server_name  *.test.frcloud.io;
     location / {
-        proxy_pass              http://localk8s;
+        proxy_pass              http://hwcloudk8s_http;
         proxy_redirect          off;
         proxy_set_header        Host $host;
         proxy_set_header        X-Real-IP $remote_addr;
@@ -122,6 +119,80 @@ server {
         #index  index.html index.htm;
     }
 }
+
+server {
+    listen   443;
+    server_name  *.dev.frcloud.io;
+    location / {
+        proxy_pass              http://hwcloudk8s_https;
+        proxy_redirect          off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        #root   /usr/share/nginx/html;
+        #index  index.html index.htm;
+    }
+}
+
+server {
+    listen   443;
+    server_name  *.test.frcloud.io;
+    location / {
+        proxy_pass              http://hwcloudk8s_https;
+        proxy_redirect          off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        #root   /usr/share/nginx/html;
+        #index  index.html index.htm;
+    }
+}
+
+
+server {
+    listen   80;
+    server_name  *.dev.fzport.com;
+    location / {
+        proxy_pass              http://hwcloudk8s_http;
+        proxy_redirect          off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        #root   /usr/share/nginx/html;
+        #index  index.html index.htm;
+    }
+}
+
+
+
+server {
+    listen   80;
+    server_name  *.test.fzport.com;
+    location / {
+        proxy_pass              http://hwcloudk8s_http;
+        proxy_redirect          off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        #root   /usr/share/nginx/html;
+        #index  index.html index.htm;
+    }
+}
+
+server {
+    listen   80;
+    server_name  *.fzport.com;
+    location / {
+        proxy_pass              http://localk8s_http;
+        proxy_redirect          off;
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        #root   /usr/share/nginx/html;
+        #index  index.html index.htm;
+    }
+}
+
 
 
 }

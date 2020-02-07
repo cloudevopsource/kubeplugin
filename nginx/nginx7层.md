@@ -20,6 +20,14 @@ tar zxvf  nginx-1.16.1.tar.gz
 mv nginx-1.16.1 nginx; cd nginx/
 ```
 
+安装依赖包
+
+```bash
+yum -y install pcre-devel
+
+yum -y install openssl openssl-devel
+```
+
 进入nginx目录
 
 ```bash

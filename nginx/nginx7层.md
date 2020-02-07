@@ -20,6 +20,8 @@ tar zxvf  nginx-1.16.1.tar.gz
 mv nginx-1.16.1 nginx; cd nginx/
 ```
 
+
+
 安装依赖包
 
 ```bash
@@ -40,6 +42,11 @@ yum -y install openssl openssl-devel
  make -j 4 && make install
 ```
 
+## 配置用户
+
+```bash
+useradd -s /sbin/nologin -M nginx
+```
 ## 配置nginx泛域名解析
 
 vi /etc/nginx.conf

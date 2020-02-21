@@ -617,6 +617,6 @@ ls /dev/mapper/ceph-* | xargs -I% -- dmsetup remove %
 # ceph-volume setup can leave ceph-<UUID> directories in /dev (unnecessary clutter)
 rm -rf /dev/ceph-*
 #务必清除干净
-rm -rf /va/lib/rook/*
+rm -rf /var/lib/rook/*
 dd if=/dev/zero of=/dev/vdb bs=1M count=10240 oflag=direct
 ```

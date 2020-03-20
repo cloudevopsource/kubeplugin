@@ -75,7 +75,7 @@ sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
 ## 将域名解析写入到hosts
 
 ```bash
-echo "192.1t68.127.162    ldap.fzport.com" >> /etc/hosts
+echo "172.16.26.3    ldap.fzport.com" >> /etc/hosts
 ```
 
 # 安装

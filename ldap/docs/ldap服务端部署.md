@@ -89,7 +89,8 @@ yum install -y openldap openldap-clients openldap-devel openldap-servers compat-
 - 准备BDB数据库文件
 
 ```bash
-cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIGchown ldap:ldap /var/lib/ldap/DB_CONFIG
+cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+chown ldap:ldap /var/lib/ldap/DB_CONFIG
 ```
 
 - 启动并加入开机自启动

@@ -96,7 +96,8 @@ chown ldap:ldap /var/lib/ldap/DB_CONFIG
 - 启动并加入开机自启动
 
 ```bash
-systemctl start slapdsystemctl enable slapd
+systemctl start slapd
+systemctl enable slapd
 ```
 
 # 基础配置

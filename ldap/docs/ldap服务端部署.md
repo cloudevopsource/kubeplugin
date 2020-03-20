@@ -122,11 +122,8 @@ Re-enter new password:
 vim chrootpw.ldif 
 
 dn: olcDatabase={0}config,cn=config
-
 changetype: modify
-
 add: olcRootPW
-
 olcRootPW: {SSHA}5KqLmqUXoiq/I3nDByp2NKDNjc4STyjW #填入上面生成的ssha
 ```
 
@@ -149,7 +146,9 @@ ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
 - 先准备一个openldap 根DN的管理密码(undead@666666)，然后设置你的RootDN名字在openldap的数据库中
 
 ```bash
-[root@openldap-server ~]# slappasswdNew password: Re-enter new password: {SSHA}sA4tp2fDiU/DVMfYTc65ugQDqaNyt3ai
+[root@openldap-server ~]# slappasswd
+New password: Re-enter 
+new password: {SSHA}sA4tp2fDiU/DVMfYTc65ugQDqaNyt3ai
 ```
 
 - 编写RootDN的ldif文件（cn=admin,dc=fzport,dc=com）

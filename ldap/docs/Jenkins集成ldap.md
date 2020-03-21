@@ -12,14 +12,14 @@ Jenkins启用了ldap登陆之后，默认是登录用户就是管理员权限，
 - 模板选择默认
 - **ObjectClasses**选择**inetOrgPerson**，然后点击继续
 - 从上而下填写，RDN选择 `User Name(uid)`
-- 然后开始正式的人员信息填写
-  - cn：zhangs
-  - sn：zhangs
+- 然后开始正式的人员信息填写an
+  - cn：zhangsan
+  - sn：zhangsan
   - displayName：张三
-  - 电子邮件：zhangs@qq.com
+  - 电子邮件：zhangsan@163.com
   - ou：People
-  - 密码：123456
-  - User Name：zhangs
+  - 密码：undead@666
+  - User Name：zhangsan
 
 然后点击创建，提交之后，一个普通用户就创建成功了。一般情况下，应用直接通过这一层来管理用户即可。
 
@@ -44,3 +44,11 @@ Jenkins启用了ldap登陆之后，默认是登录用户就是管理员权限，
 可以看到，此时在Jenkins这个组里边，加入了两个用户，实际生产当中，原有用户应该已经存在，此时可以新增群组，然后将需要访问Jenkins应用的用户，加入进来，而没有加入这个组的用户，将无法访问。
 
 下边进入正式配置，新版本的Jenkins已经默认集成了ldap，因此不需要额外安装插件，直接点击`系统管理`—>`Configure Global Security`，按照下边的内容，进行配置即可。
+
+![](./ldap_pic/image-20200321142420057.png)
+
+配置完成，下边会有一个test LDAP setting，此时可以用其中一个账号密码进行测试，看到如下输出，则说明配置成功：
+
+![](./ldap_pic/image-20200321142902992.png)
+
+保存之后，就可以通过ldap当中，Jenkins组内的用户名密码进行登陆了，这里只是解决了用户能够登陆Jenkins的问题，具体Jenkins中详细的用户权限分配需使用Jenkins中的角色控制（小黄锁）

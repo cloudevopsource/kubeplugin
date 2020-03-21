@@ -39,7 +39,7 @@ Jenkins启用了ldap登陆之后，默认是登录用户就是管理员权限，
 
 创建完成后的架构模式如下：
 
-![image-20200320173355718](https://github.com/cloudevopsource/kubeplugin/blob/master/ldap/docs/group_exp.jpg)
+![](./ldap_pic/group_exp.jpg)
 
 可以看到，此时在Jenkins这个组里边，加入了两个用户，实际生产当中，原有用户应该已经存在，此时可以新增群组，然后将需要访问Jenkins应用的用户，加入进来，而没有加入这个组的用户，将无法访问。
 

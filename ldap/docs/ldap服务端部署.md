@@ -210,10 +210,10 @@ objectclass: organization
 o: fzport com
 dc: fzport
 
-dn: cn=Manager,dc=fzport,dc=com
+dn: cn=admin,dc=fzport,dc=com
 objectClass: organizationalRole
-cn: Manager
-description: Directory Manager
+cn: admin
+description: Directory admin
 
 dn: ou=People,dc=fzport,dc=com
 objectClass: organizationalUnit
